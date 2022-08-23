@@ -1,63 +1,10 @@
 import { useState, useEffect } from "react";
-// component
-function AddContent({ newTodo, setNewTodo, addTodo }) {
-  return (
-    <div className="addContent">
-      <input
-        type="text"
-        placeholder="請新增代辦事項"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value.trim())}
-        onKeyPress={(e) => {
-          if (e.key === "Enter") addTodo();
-        }}
-      />
-      <button onClick={addTodo}></button>
-    </div>
-  );
-}
-function Tab({ tab, currentTab, setCurrentTab }) {
-  return (
-    <>
-      {tab.map((item) => (
-        <li
-          key={item.id}
-          className={item.id === currentTab ? "currentTab" : ""}
-          id={item.id}
-          onClick={() => setCurrentTab(item.id)}
-        >
-          {item.type}
-        </li>
-      ))}
-    </>
-  );
-}
-function TodoItem({ currentTodoItem, done, clean }) {
-  return (
-    <>
-      {currentTodoItem.map((item) => (
-        <li key={item.id}>
-          <label htmlFor={item.id}>
-            <input
-              type="checkbox"
-              id={item.id}
-              checked={item.isDone}
-              onChange={done}
-            />
-            <div className={item.isDone ? "check" : ""}></div>
-            <p className={item.isDone ? "done" : ""}>{item.todo}</p>
-          </label>
-          <button id={item.id} onClick={clean}>
-            ✕
-          </button>
-        </li>
-      ))}
-    </>
-  );
-}
+import Header from "./Components/Header";
+import AddContent from "./Components/AddContent";
+import Tab from "./Components/Tab";
+import TodoItem from "./Components/TodoItem";
 
 function App() {
-  // hooks
   const [newTodo, setNewTodo] = useState("");
   const tab = [
     {
@@ -146,20 +93,9 @@ function App() {
     setTodoItem(todoItem.filter((item) => !item.isDone));
     setCurrentTab("all");
   };
-
   return (
     <>
-      <header>
-        <img src="https://upload.cc/i1/2022/03/23/8vTzYG.png" alt="logo" />
-        <ul>
-          <li>
-            <p>我的代辦</p>
-          </li>
-          <li>
-            <p>登出</p>
-          </li>
-        </ul>
-      </header>
+      <Header />
       <main>
         <AddContent
           newTodo={newTodo}
